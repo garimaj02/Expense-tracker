@@ -17,6 +17,12 @@ exports.addExpense = async (req, res) => {
         if(!title || !category || !description || !date){
             return res.status(400).json({message: 'All fields are required!'})
         }
+        if (!title === 'string' || title.trim().length === 0 || title.length > 10 || !/^[A-Za-z\s]+$/.test(title)) {
+            return res.status(400).json({ message: 'Title must not be numeric!' });
+        }
+        if (!description === 'string' || description.trim().length === 0 || description.length > 50 || /^[0-9]+$/.test(description)) {
+            return res.status(400).json({ message: 'Invalid Description!' });
+        }
         if(amount <= 0 || !amount === 'number'){
             return res.status(400).json({message: 'Amount must be a positive number!'})
         }
